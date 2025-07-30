@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Education: Brazil vs OECD</title>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <link rel="stylesheet" href="../static/css/styles.css">
+</head>
+<body>
+  <div class="dash-header">
+    <h1>Education: Brazil vs OECD</h1>
+  </div>
+
+  <div id="education-chart" style="width:90%;max-width:800px;margin:40px auto;"></div>
+
+  <script>
+    // 1) Load your CSV
+    Plotly.d3.csv("../data/raw/child_indicators.csv", function(err, rows) {
+      if(err) return console.error(err);
+
+      // 2) Filter rows by country
+      const brazil = rows.filter(r => r.Country === "Brazil");
+      const oecd  = rows.filter(r => r.Country === "OECD Avg");
+
+      // 3) Pull unique indicators
+      const indicators = Array.from(new Set(rows.map(r => r.Indicator)));
+
+      // 4) Build traces
+      const traceBR = {
+        x: indicators,
+        y: indicators.map(i => +brazil.find(r => r.Indicator === i).Value),
+        name: "Brazil",
+        type: "bar",
+        marker: {color: "#006699"}
+      };
+      const traceOECD = {
+        x: indicators,
+        y: indicators.map(i => +oecd.find(r => r.Indicator === i).Value),
+        name: "OECD Avg",
+        type: "bar",
+        marker: {color: "#999999"}
+      };
+
+      // 5) Plot
+      Plotly.newPlot("education-chart",
+        [traceBR, traceOECD],
+        {
+          barmode: "group",
+          margin: {t:40, b:100},
+          yaxis: {title: "% / Value"},
+          xaxis: {tickangle: -45}
+        }
+      );
+    });
+  </script>
+</body>
+</html>

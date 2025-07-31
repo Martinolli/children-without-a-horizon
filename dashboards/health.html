@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Health & Nutrition: Brazil vs OECD</title>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <link rel="stylesheet" href="../static/css/styles.css">
+</head>
+<body>
+  <div class="dash-header">
+    <h1>Health & Nutrition: Brazil vs OECD</h1>
+  </div>
+
+  <div id="health-chart" style="width:90%;max-width:800px;margin:40px auto;"></div>
+
+  <script>
+    Plotly.d3.csv("../data/raw/child_indicators.csv", function(err, rows) {
+      if(err) return console.error(err);
+
+      // Only health/nutrition indicators
+      const healthIndicators = [
+        "Daily Meals (2–9 yrs)",
+        "Vaccination (Polio)",
+        "Maternal Mortality"
+      ];
+
+      const brazil = rows.filter(r => r.Country === "Brazil" && healthIndicators.includes(r.Indicator));
+      const oecd  = rows.filter(r => r.Country === "OECD Avg" && healthIndicators.includes(r.Indicator));
+
+      const traceBR = {
+        x: healthIndicators,
+        y: healthIndicators.map(i => +brazil.find(r => r.Indicator === i).Value),
+        name: "Brazil",
+        type: "bar",
+        marker: {color: "#006699"}
+      };
+      const traceOECD = {
+        x: healthIndicators,
+        y: healthIndicators.map(i => +oecd.find(r => r.Indicator === i).Value),
+        name: "OECD Avg",
+        type: "bar",
+        marker: {color: "#999999"}
+      };
+
+      Plotly.newPlot("health-chart",
+        [traceBR, traceOECD],
+        {
+          barmode: "group",
+          margin: {t:40, b:70},
+          yaxis: {title: "% / Value"},
+          xaxis: {tickangle: -20}
+        }
+      );
+    });
+  </script>
+</body>
+</html>

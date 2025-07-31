@@ -2,63 +2,343 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Children Without a Horizon</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Exploring childhood, education, health, and socioeconomic disparity in Brazil through data-driven storytelling and minimalist design.">
+  <meta name="keywords" content="Brazil, children, education, health, data, OECD, statistics, social indicators">
+  <meta name="author" content="Children Without a Horizon Project">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://children-without-a-horizon.github.io/">
+  <meta property="og:title" content="Children Without a Horizon - Brazilian Data Project">
+  <meta property="og:description" content="Revealing unseen realities about Brazilian children's welfare through data dashboards and reflective essays.">
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://children-without-a-horizon.github.io/">
+  <meta property="twitter:title" content="Children Without a Horizon - Brazilian Data Project">
+  <meta property="twitter:description" content="Revealing unseen realities about Brazilian children's welfare through data dashboards and reflective essays.">
+  
+  <title>Children Without a Horizon - Brazilian Data Project</title>
+  
+  <!-- Preload critical fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  
   <link rel="stylesheet" href="static/css/styles.css">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
 </head>
 <body>
-  <div class="language-toggle">
-    <a href="?lang=en">English</a> | <a href="?lang=pt">Português</a>
-  </div>
+  <!-- Site Header -->
+  <header class="site-header">
+    <div class="container">
+      <div class="header-content">
+        <a href="/" class="site-logo">Children Without a Horizon</a>
+        
+        <nav class="main-nav" role="navigation" aria-label="Main navigation">
+          <ul>
+            <li><a href="#dashboards" class="active">Dashboards</a></li>
+            <li><a href="#essays">Essays</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#data">Data</a></li>
+          </ul>
+        </nav>
+        
+        <div class="language-toggle" role="group" aria-label="Language selection">
+          <a href="?lang=en" class="active" aria-label="Switch to English">EN</a>
+          <a href="?lang=pt" aria-label="Mudar para Português">PT</a>
+        </div>
+      </div>
+    </div>
+  </header>
 
-<header>
-  <div class="overlay">
-    <h1>The Fog of Potential</h1>
-    <p>
-      In Brazil, childhood is often a negotiation with scarcity.<br>
-      Education is not a promise—it’s a gamble.<br>
-      Health is not a right—it’s a lottery.<br>
-      And the future? It’s a fog that only a few can see through.<br><br>
+  <!-- Main Content -->
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-content">
+          <h1>The Fog of Potential</h1>
+          <p class="hero-subtitle">
+            In Brazil, childhood is often a negotiation with scarcity. Education is not a promise—it's a gamble. 
+            Health is not a right—it's a lottery. Through data and storytelling, we aim to clear the fog 
+            that obscures the potential of millions of Brazilian children.
+          </p>
+          
+          <div class="hero-stats">
+            <div class="stat-card">
+              <span class="stat-number">43.6%</span>
+              <span class="stat-label">Grade 2 Literacy Rate</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">20.6%</span>
+              <span class="stat-label">Children with Daily Meals</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">49.1%</span>
+              <span class="stat-label">Children in Poverty</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-      When I look at the numbers, I don’t just see statistics—I see stolen potential.<br>
-      Only 43.6% of second graders can read proficiently.<br>
-      Only 20.6% of children under 9 eat adequately each day.<br><br>
+    <!-- Quote Section -->
+    <section class="quote-section">
+      <div class="container">
+        <blockquote>
+          "A child without learning is not just forgotten—they are erased."
+        </blockquote>
+      </div>
+    </section>
 
-      In wealthier nations, thriving is the expectation.<br>
-      Here, surviving is the hope.<br><br>
+    <!-- Dashboards Section -->
+    <section id="dashboards" class="content-section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Explore the Data</h2>
+          <p class="section-description">
+            Interactive dashboards revealing the stark realities facing Brazilian children, 
+            compared against OECD averages to provide global context.
+          </p>
+        </div>
+        
+        <div class="grid grid-2">
+          <div class="card">
+            <h3 class="card-title">Education: Brazil vs OECD</h3>
+            <p class="card-description">
+              Explore literacy rates, education spending, and learning outcomes that reveal 
+              the educational challenges facing Brazilian children.
+            </p>
+            <a href="dashboards/education.html" class="card-link">
+              View Education Dashboard
+            </a>
+          </div>
+          
+          <div class="card">
+            <h3 class="card-title">Health & Nutrition</h3>
+            <p class="card-description">
+              Examine health indicators including nutrition, vaccination rates, and maternal 
+              mortality that impact child welfare across Brazil.
+            </p>
+            <a href="dashboards/health.html" class="card-link">
+              View Health Dashboard
+            </a>
+          </div>
+          
+          <div class="card">
+            <h3 class="card-title">Economic Indicators</h3>
+            <p class="card-description">
+              Understand the economic factors contributing to childhood poverty and 
+              limited opportunities for Brazilian families.
+            </p>
+            <a href="dashboards/economic.html" class="card-link">
+              View Economic Dashboard
+            </a>
+          </div>
+          
+          <div class="card">
+            <h3 class="card-title">Global Comparisons</h3>
+            <p class="card-description">
+              Compare Brazilian indicators with other countries to understand where 
+              Brazil stands globally and identify improvement opportunities.
+            </p>
+            <a href="dashboards/global_compare.html" class="card-link">
+              View Global Comparisons
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
 
-      We need dashboards not just to display numbers—but to bear witness.<br>
-      The fog isn’t inevitable—it’s constructed.<br>
-      And it is our job to clear it.
-    </p>
-  </div>
-</header>
+    <!-- Essays Section -->
+    <section id="essays" class="content-section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Reflections & Analysis</h2>
+          <p class="section-description">
+            Long-form essays that connect data to human stories, exploring the systemic 
+            challenges and potential solutions for Brazilian children's welfare.
+          </p>
+        </div>
+        
+        <div class="grid grid-2">
+          <div class="card">
+            <h3 class="card-title">The Fog of Potential</h3>
+            <p class="card-description">
+              An exploration of unrealized human potential represented by the education 
+              and opportunity gaps revealed in Brazilian data.
+            </p>
+            <a href="essays/fog_of_potential.html" class="card-link">
+              Read Essay
+            </a>
+          </div>
+          
+          <div class="card">
+            <h3 class="card-title">When a Classroom Is a Lifeline</h3>
+            <p class="card-description">
+              Examining the transformative potential of education while acknowledging 
+              the systemic barriers preventing access to quality learning.
+            </p>
+            <a href="essays/classroom_lifeline.html" class="card-link">
+              Read Essay
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  <section class="quote">
-    <blockquote>
-      “A child without learning is not just forgotten—they are erased.”
-    </blockquote>
-  </section>
+    <!-- About Section -->
+    <section id="about" class="content-section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">About This Project</h2>
+          <p class="section-description">
+            Understanding the mission, methodology, and vision behind Children Without a Horizon.
+          </p>
+        </div>
+        
+        <div class="grid grid-3">
+          <div class="card">
+            <h3 class="card-title">Our Mission</h3>
+            <p class="card-description">
+              To reveal unseen realities about Brazilian children's welfare through 
+              minimalist storytelling and data-driven advocacy.
+            </p>
+          </div>
+          
+          <div class="card">
+            <h3 class="card-title">Data Sources</h3>
+            <p class="card-description">
+              All data sourced from authoritative organizations including UNICEF, 
+              World Bank, and Brazilian government statistics (IBGE).
+            </p>
+          </div>
+          
+          <div class="card">
+            <h3 class="card-title">Methodology</h3>
+            <p class="card-description">
+              Transparent data processing with automated pipelines ensuring 
+              accuracy and regular updates of all indicators.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  <section class="dashboards">
-    <h2>Explore the Data</h2>
-    <ul>
-      <li><a href="dashboards/education.html">Education: Brazil vs OECD</a></li>
-      <li><a href="dashboards/health.html">Health & Nutrition</a></li>
-      <li><a href="dashboards/global_compare.html">Global Comparison Explorer</a></li>
-      <li><a href="dashboards/education.html">Education: Brazil vs OECD</a></li>
-    </ul>
-  </section>
+    <!-- Data Access Section -->
+    <section id="data" class="content-section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Access the Data</h2>
+          <p class="section-description">
+            Download datasets, explore our methodology, and use our data for your own research and advocacy.
+          </p>
+        </div>
+        
+        <div class="grid grid-2">
+          <div class="card">
+            <h3 class="card-title">Download Datasets</h3>
+            <p class="card-description">
+              Access clean, processed datasets in CSV format for your own analysis and research.
+            </p>
+            <a href="data/processed/" class="btn btn-primary">
+              Download Data
+            </a>
+          </div>
+          
+          <div class="card">
+            <h3 class="card-title">View on GitHub</h3>
+            <p class="card-description">
+              Explore our open-source code, contribute improvements, or fork the project for your own use.
+            </p>
+            <a href="https://github.com/Martinolli/children-without-a-horizon" class="btn btn-secondary">
+              View Repository
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 
-  <section class="essays">
-    <h2>Reflections</h2>
-    <ul>
-      <li><a href="essays/fog_of_potential.html">The Fog of Potential</a></li>
-      <li><a href="essays/classroom_lifeline.html">When a Classroom Is a Lifeline</a></li>
-    </ul>
-  </section>
-
-  <footer>
-    <p>&copy; 2025 • <a href="https://github.com/Joao/children-without-a-horizon">GitHub Repository</a></p>
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>Project</h3>
+          <a href="#about">About</a>
+          <a href="#data">Data Sources</a>
+          <a href="methodology.html">Methodology</a>
+          <a href="updates.html">Updates</a>
+        </div>
+        
+        <div class="footer-section">
+          <h3>Content</h3>
+          <a href="#dashboards">Dashboards</a>
+          <a href="#essays">Essays</a>
+          <a href="glossary.html">Glossary</a>
+          <a href="references.html">References</a>
+        </div>
+        
+        <div class="footer-section">
+          <h3>Connect</h3>
+          <a href="https://github.com/Martinolli/children-without-a-horizon">GitHub</a>
+          <a href="mailto:contact@children-without-a-horizon.org">Contact</a>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="license.html">License</a>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; 2025 Children Without a Horizon. Licensed under MIT License. 
+           Data sourced from UNICEF, World Bank, and IBGE.</p>
+      </div>
+    </div>
   </footer>
+
+  <!-- JavaScript for enhanced functionality -->
+  <script>
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Language toggle functionality
+    const languageToggle = document.querySelector('.language-toggle');
+    if (languageToggle) {
+      languageToggle.addEventListener('click', function(e) {
+        if (e.target.tagName === 'A') {
+          // Remove active class from all language links
+          languageToggle.querySelectorAll('a').forEach(link => {
+            link.classList.remove('active');
+          });
+          // Add active class to clicked link
+          e.target.classList.add('active');
+        }
+      });
+    }
+
+    // Add loading states for dashboard links
+    document.querySelectorAll('.card-link').forEach(link => {
+      link.addEventListener('click', function() {
+        this.style.opacity = '0.7';
+        this.innerHTML = this.innerHTML.replace('→', '⟳');
+      });
+    });
+  </script>
 </body>
 </html>
+

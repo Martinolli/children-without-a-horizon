@@ -2,62 +2,569 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Health & Nutrition: Brazil vs OECD</title>
-  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Health and nutrition indicators comparing Brazil to OECD averages - vaccination rates, maternal mortality, and child nutrition.">
+  <title>Health Dashboard - Children Without a Horizon</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <!-- Styles -->
   <link rel="stylesheet" href="../static/css/styles.css">
+  
+  <!-- Plotly.js -->
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  
+  <style>
+    /* Dashboard-specific styles */
+    .dashboard-header {
+      background: linear-gradient(135deg, var(--color-light-gray) 0%, var(--color-background) 100%);
+      padding: var(--space-2xl) 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+    
+    .dashboard-nav {
+      background-color: var(--color-background);
+      border-bottom: 1px solid var(--color-border);
+      padding: var(--space-md) 0;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    
+    .dashboard-nav ul {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      gap: var(--space-lg);
+      align-items: center;
+    }
+    
+    .dashboard-nav .home-link {
+      color: var(--color-secondary);
+      font-size: var(--font-size-sm);
+    }
+    
+    .dashboard-nav .home-link:hover {
+      color: var(--color-accent);
+    }
+    
+    .dashboard-nav .divider {
+      color: var(--color-border);
+      font-size: var(--font-size-sm);
+    }
+    
+    .dashboard-nav .current {
+      color: var(--color-accent);
+      font-weight: 600;
+    }
+    
+    .key-metrics {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--space-lg);
+      margin-bottom: var(--space-2xl);
+    }
+    
+    .metric-card {
+      background-color: var(--color-background);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      padding: var(--space-xl);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .metric-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--color-error) 0%, var(--color-accent) 100%);
+    }
+    
+    .metric-value {
+      font-family: var(--font-mono);
+      font-size: var(--font-size-3xl);
+      font-weight: 700;
+      color: var(--color-primary);
+      display: block;
+      margin-bottom: var(--space-sm);
+    }
+    
+    .metric-value.warning {
+      color: var(--color-error);
+    }
+    
+    .metric-value.good {
+      color: var(--color-success);
+    }
+    
+    .metric-label {
+      font-size: var(--font-size-sm);
+      color: var(--color-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: var(--space-sm);
+    }
+    
+    .metric-comparison {
+      font-size: var(--font-size-xs);
+      color: var(--color-secondary);
+      background-color: var(--color-light-gray);
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: 4px;
+      display: inline-block;
+    }
+    
+    .chart-container {
+      background-color: var(--color-background);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      padding: var(--space-xl);
+      margin-bottom: var(--space-2xl);
+    }
+    
+    .chart-title {
+      font-size: var(--font-size-xl);
+      font-weight: 600;
+      margin-bottom: var(--space-md);
+      color: var(--color-primary);
+    }
+    
+    .chart-description {
+      color: var(--color-secondary);
+      margin-bottom: var(--space-lg);
+      line-height: 1.6;
+    }
+    
+    .insight-box {
+      background-color: var(--color-light-gray);
+      border-left: 4px solid var(--color-error);
+      padding: var(--space-lg);
+      margin: var(--space-xl) 0;
+      border-radius: 0 8px 8px 0;
+    }
+    
+    .insight-box.positive {
+      border-left-color: var(--color-success);
+    }
+    
+    .insight-box h3 {
+      color: var(--color-primary);
+      margin-bottom: var(--space-md);
+      font-size: var(--font-size-lg);
+    }
+    
+    .insight-box p {
+      color: var(--color-secondary);
+      margin: 0;
+    }
+    
+    .data-source {
+      font-size: var(--font-size-xs);
+      color: var(--color-secondary);
+      text-align: center;
+      margin-top: var(--space-md);
+      padding-top: var(--space-md);
+      border-top: 1px solid var(--color-border);
+    }
+    
+    @media (max-width: 768px) {
+      .dashboard-nav ul {
+        flex-wrap: wrap;
+        gap: var(--space-sm);
+      }
+      
+      .key-metrics {
+        grid-template-columns: 1fr;
+      }
+      
+      .metric-value {
+        font-size: var(--font-size-2xl);
+      }
+    }
+  </style>
 </head>
 <body>
-  <div class="dash-header">
-    <h1>Health & Nutrition: Brazil vs OECD</h1>
-  </div>
+  <!-- Dashboard Navigation -->
+  <nav class="dashboard-nav">
+    <div class="container">
+      <ul>
+        <li><a href="../index.html" class="home-link">← Home</a></li>
+        <li><span class="divider">|</span></li>
+        <li><a href="education.html">Education</a></li>
+        <li><span class="current">Health</span></li>
+        <li><a href="economic.html">Economic</a></li>
+        <li><a href="global_compare.html">Global</a></li>
+      </ul>
+    </div>
+  </nav>
 
-  <div id="health-chart" style="width:90%;max-width:800px;margin:40px auto;"></div>
+  <!-- Dashboard Header -->
+  <header class="dashboard-header">
+    <div class="container">
+      <h1>Health & Nutrition: Brazil vs OECD</h1>
+      <p class="hero-subtitle">
+        Examining vaccination rates, maternal mortality, and child nutrition indicators that reveal 
+        the health challenges facing Brazilian children and families compared to OECD averages.
+      </p>
+    </div>
+  </header>
 
+  <!-- Main Dashboard Content -->
+  <main class="content-section">
+    <div class="container">
+      
+      <!-- Key Metrics -->
+      <div class="key-metrics">
+        <div class="metric-card">
+          <span class="metric-value warning">77.2%</span>
+          <div class="metric-label">Vaccination Rate (Polio)</div>
+          <div class="metric-comparison">OECD: 94.0%</div>
+        </div>
+        
+        <div class="metric-card">
+          <span class="metric-value warning">117.4</span>
+          <div class="metric-label">Maternal Mortality (per 100k)</div>
+          <div class="metric-comparison">OECD: 12.4</div>
+        </div>
+        
+        <div class="metric-card">
+          <span class="metric-value warning">20.6%</span>
+          <div class="metric-label">Children with Daily Meals</div>
+          <div class="metric-comparison">OECD: 85.0%</div>
+        </div>
+        
+        <div class="metric-card">
+          <span class="metric-value warning">9.5x</span>
+          <div class="metric-label">Maternal Mortality Gap</div>
+          <div class="metric-comparison">Brazil rate vs OECD average</div>
+        </div>
+      </div>
+
+      <!-- Main Comparison Chart -->
+      <div class="chart-container">
+        <h2 class="chart-title">Health Indicators: Brazil vs OECD Average</h2>
+        <p class="chart-description">
+          This chart compares key health and nutrition indicators between Brazil and OECD countries, 
+          highlighting significant gaps in vaccination coverage, maternal health, and child nutrition.
+        </p>
+        
+        <div id="health-chart" style="width:100%; height:500px;"></div>
+        
+        <div class="data-source">
+          Data sources: UNICEF, World Health Organization, World Bank | Last updated: July 2025
+        </div>
+      </div>
+
+      <!-- Insights Section -->
+      <div class="insight-box">
+        <h3>Vaccination Coverage Crisis</h3>
+        <p>
+          <strong>Immunization Gap:</strong> With only 77.2% polio vaccination coverage, Brazil falls 
+          16.8 percentage points behind OECD averages, leaving hundreds of thousands of children 
+          vulnerable to preventable diseases that could cause lifelong disabilities.
+        </p>
+      </div>
+
+      <div class="insight-box">
+        <h3>Maternal Health Emergency</h3>
+        <p>
+          <strong>Maternal Mortality Crisis:</strong> Brazil's maternal mortality rate of 117.4 deaths 
+          per 100,000 live births is nearly 10 times higher than the OECD average of 12.4, 
+          reflecting systemic issues in healthcare access and quality for pregnant women.
+        </p>
+      </div>
+
+      <div class="insight-box">
+        <h3>Child Nutrition Challenge</h3>
+        <p>
+          <strong>Food Insecurity:</strong> Only 20.6% of Brazilian children aged 2-9 receive adequate 
+          daily meals, compared to 85% in OECD countries. This 64.4 percentage point gap affects 
+          cognitive development, school performance, and long-term health outcomes.
+        </p>
+      </div>
+
+      <!-- Detailed Analysis Chart -->
+      <div class="chart-container">
+        <h2 class="chart-title">Health Outcomes Comparison</h2>
+        <p class="chart-description">
+          Comparing Brazil's health indicators against OECD benchmarks reveals the scale of 
+          health disparities affecting Brazilian children and families.
+        </p>
+        
+        <div id="outcomes-chart" style="width:100%; height:400px;"></div>
+        
+        <div class="data-source">
+          Analysis based on WHO Global Health Observatory and UNICEF State of the World's Children
+        </div>
+      </div>
+
+      <!-- Context Section -->
+      <div class="grid grid-2" style="margin-top: var(--space-2xl);">
+        <div class="card">
+          <h3 class="card-title">Health System Challenges</h3>
+          <p class="card-description">
+            The health data reveals systemic challenges in Brazil's healthcare system, particularly 
+            affecting vulnerable populations. Geographic disparities, resource constraints, and 
+            infrastructure gaps contribute to poor health outcomes for children and mothers.
+          </p>
+        </div>
+        
+        <div class="card">
+          <h3 class="card-title">Long-term Consequences</h3>
+          <p class="card-description">
+            Poor health outcomes in childhood create cascading effects throughout life. Malnutrition 
+            affects cognitive development and school performance, while preventable diseases can 
+            cause lifelong disabilities that limit future opportunities.
+          </p>
+        </div>
+      </div>
+
+      <!-- Regional Disparities -->
+      <div class="chart-container">
+        <h2 class="chart-title">Understanding the Impact</h2>
+        <p class="chart-description">
+          The health disparities shown in these indicators represent real challenges affecting 
+          millions of Brazilian families, with particularly severe impacts in rural and 
+          economically disadvantaged regions.
+        </p>
+        
+        <div class="grid grid-3">
+          <div class="card">
+            <h4>Vaccination Gaps</h4>
+            <p class="card-description">
+              Lower vaccination rates increase disease outbreaks, particularly affecting 
+              communities with limited healthcare access.
+            </p>
+          </div>
+          
+          <div class="card">
+            <h4>Maternal Health</h4>
+            <p class="card-description">
+              High maternal mortality reflects broader healthcare system challenges 
+              affecting women's health and family stability.
+            </p>
+          </div>
+          
+          <div class="card">
+            <h4>Child Nutrition</h4>
+            <p class="card-description">
+              Inadequate nutrition affects brain development, immune function, 
+              and educational achievement throughout childhood.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Related Content -->
+      <div class="content-section" style="padding-top: var(--space-2xl);">
+        <div class="section-header">
+          <h2 class="section-title">Explore Related Data</h2>
+        </div>
+        
+        <div class="grid grid-3">
+          <div class="card">
+            <h3 class="card-title">Education Dashboard</h3>
+            <p class="card-description">
+              See how health challenges impact educational outcomes and learning.
+            </p>
+            <a href="education.html" class="card-link">View Education Data</a>
+          </div>
+          
+          <div class="card">
+            <h3 class="card-title">Economic Indicators</h3>
+            <p class="card-description">
+              Understand how economic factors influence health access and outcomes.
+            </p>
+            <a href="economic.html" class="card-link">View Economic Data</a>
+          </div>
+          
+          <div class="card">
+            <h3 class="card-title">Read Our Analysis</h3>
+            <p class="card-description">
+              Explore the deeper implications of these health statistics.
+            </p>
+            <a href="../essays/classroom_lifeline.html" class="card-link">Read Essay</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <p>&copy; 2025 Children Without a Horizon. Data from UNICEF, WHO, World Bank.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript for Charts -->
   <script>
+    // Chart configuration
+    const chartConfig = {
+      displayModeBar: false,
+      responsive: true,
+      displaylogo: false
+    };
+
+    // Load and process data
     Plotly.d3.csv("../data/raw/child_indicators.csv", function(err, rows) {
-      if(err) return console.error(err);
+      if(err) {
+        console.error("Error loading data:", err);
+        return;
+      }
 
-      // Only health/nutrition indicators
-      const healthIndicators = [
-        "Daily Meals (2–9 yrs)",
-        "Vaccination (Polio)",
-        "Maternal Mortality"
-      ];
+      // Filter health-related indicators
+      const healthIndicators = rows.filter(r => 
+        r.Indicator.includes("Vaccination") || 
+        r.Indicator.includes("Maternal") ||
+        r.Indicator.includes("Daily Meals")
+      );
 
-      const brazil = rows.filter(r => r.Country === "Brazil" && healthIndicators.includes(r.Indicator));
-      const oecd  = rows.filter(r => r.Country === "OECD Avg" && healthIndicators.includes(r.Indicator));
+      // Separate Brazil and OECD data
+      const brazil = healthIndicators.filter(r => r.Country === "Brazil");
+      const oecd = healthIndicators.filter(r => r.Country === "OECD Avg");
 
-      const traceBR = {
-        x: healthIndicators,
-        y: healthIndicators.map(i => +brazil.find(r => r.Indicator === i).Value),
+      // Get unique indicators
+      const indicators = Array.from(new Set(healthIndicators.map(r => r.Indicator)));
+
+      // Create main comparison chart
+      const traceBrazil = {
+        x: indicators,
+        y: indicators.map(i => {
+          const row = brazil.find(r => r.Indicator === i);
+          return row ? +row.Value : 0;
+        }),
         name: "Brazil",
         type: "bar",
-        marker: {color: "#006699"}
-      };
-      const traceOECD = {
-        x: healthIndicators,
-        y: healthIndicators.map(i => +oecd.find(r => r.Indicator === i).Value),
-        name: "OECD Avg",
-        type: "bar",
-        marker: {color: "#999999"}
+        marker: {
+          color: "#D32F2F",
+          opacity: 0.8
+        },
+        hovertemplate: "<b>%{x}</b><br>Brazil: %{y}<br><extra></extra>"
       };
 
-      Plotly.newPlot("health-chart",
-        [traceBR, traceOECD],
+      const traceOECD = {
+        x: indicators,
+        y: indicators.map(i => {
+          const row = oecd.find(r => r.Indicator === i);
+          return row ? +row.Value : 0;
+        }),
+        name: "OECD Average",
+        type: "bar",
+        marker: {
+          color: "#666666",
+          opacity: 0.8
+        },
+        hovertemplate: "<b>%{x}</b><br>OECD Avg: %{y}<br><extra></extra>"
+      };
+
+      const layout = {
+        barmode: "group",
+        margin: {t: 20, b: 120, l: 60, r: 20},
+        font: {
+          family: "Inter, sans-serif",
+          size: 12,
+          color: "#2C2C2C"
+        },
+        plot_bgcolor: "rgba(0,0,0,0)",
+        paper_bgcolor: "rgba(0,0,0,0)",
+        xaxis: {
+          tickangle: -45,
+          tickfont: {size: 11},
+          gridcolor: "#E0E0E0",
+          gridwidth: 1
+        },
+        yaxis: {
+          title: {
+            text: "Value",
+            font: {size: 12, color: "#666666"}
+          },
+          gridcolor: "#E0E0E0",
+          gridwidth: 1
+        },
+        legend: {
+          orientation: "h",
+          y: -0.3,
+          x: 0.5,
+          xanchor: "center"
+        },
+        hovermode: "closest"
+      };
+
+      Plotly.newPlot("health-chart", [traceBrazil, traceOECD], layout, chartConfig);
+
+      // Create outcomes comparison chart (radar/polar chart)
+      const outcomesData = [
         {
-          barmode: "group",
-          margin: {t:40, b:70},
-          yaxis: {title: "% / Value"},
-          xaxis: {tickangle: -20}
+          type: 'scatterpolar',
+          r: [77.2, 20.6, 100 - (117.4/12.4 * 10)], // Normalized values
+          theta: ['Vaccination Rate', 'Nutrition Access', 'Maternal Safety'],
+          fill: 'toself',
+          name: 'Brazil',
+          marker: {color: '#D32F2F'},
+          line: {color: '#D32F2F'}
+        },
+        {
+          type: 'scatterpolar',
+          r: [94.0, 85.0, 90], // OECD normalized values
+          theta: ['Vaccination Rate', 'Nutrition Access', 'Maternal Safety'],
+          fill: 'toself',
+          name: 'OECD Average',
+          marker: {color: '#666666'},
+          line: {color: '#666666'}
         }
-      );
+      ];
+
+      const outcomesLayout = {
+        polar: {
+          radialaxis: {
+            visible: true,
+            range: [0, 100],
+            tickfont: {size: 10}
+          }
+        },
+        margin: {t: 20, b: 60, l: 60, r: 60},
+        font: {
+          family: "Inter, sans-serif",
+          size: 12,
+          color: "#2C2C2C"
+        },
+        legend: {
+          orientation: "h",
+          y: -0.1,
+          x: 0.5,
+          xanchor: "center"
+        }
+      };
+
+      Plotly.newPlot("outcomes-chart", outcomesData, outcomesLayout, chartConfig);
+    });
+
+    // Add smooth scrolling for navigation
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
     });
   </script>
 </body>
 </html>
-<nav>
-  <a href="../index.html">&larr; Home</a> |
-  <a href="education.html">Education</a> |
-  <a href="health.html">Health</a>
-  <!-- Add more as needed -->
-</nav>
+
